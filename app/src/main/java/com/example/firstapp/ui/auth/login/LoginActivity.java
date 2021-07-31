@@ -16,7 +16,6 @@ import com.example.firstapp.helpers.ListHelper;
 import com.example.firstapp.helpers.SharedPreferencesHelper;
 import com.example.firstapp.helpers.TextChangedHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements TextChangedHelper.TextChangedCallback {
@@ -38,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements TextChangedHelpe
     private void init(){
         etLogin = findViewById(R.id.etLogin);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin = findViewById(R.id.btnSend);
 
         new TextChangedHelper(this).attachEditText(etLogin);
         new TextChangedHelper(this).attachEditText(etPassword);

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.firstapp.R;
-import com.example.firstapp.ui.users.ClickListener;
 
 import java.util.List;
 
