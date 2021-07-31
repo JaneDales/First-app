@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         initUI();
         openFragment(new UsersListFragment());
+        //comment to test git branches
     }
 
     private void initUI() {
