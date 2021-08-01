@@ -11,16 +11,43 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.firstapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
-    private List<User> list;
+    private List<User> list, originalList;
     private ClickListener clickListener;
 
     public UsersAdapter(List<User> list, ClickListener clickListener)  {
         this.clickListener = clickListener;
         this.list = list;
+        this.originalList = list;
+    }
+
+    public void updateList (List<User> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void filter(String text) {
+        if (text.trim().isEmpty()){
+            resetList();
+        }
+        else {
+            List<User> temp = new ArrayList<>();
+            for (User d : originalList) {
+                if (d.getName().toLowerCase().contains(text.toLowerCase()) ||
+                        d.getNickName().toLowerCase().contains(text.toLowerCase())) {
+                    temp.add(d);
+                }
+                updateList(temp);
+            }
+        }
+    }
+
+    public void resetList(){
+        updateList(originalList);
     }
 
     public void clear(){

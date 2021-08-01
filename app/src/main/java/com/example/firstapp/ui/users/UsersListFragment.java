@@ -10,9 +10,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.firstapp.R;
+import com.example.firstapp.helpers.TextChangedHelper;
 import com.example.firstapp.test.TestA;
 import com.example.firstapp.ui.base.BaseFragment;
 import com.example.firstapp.ui.users.details.UserDetailsFragment;
@@ -20,13 +22,14 @@ import com.example.firstapp.ui.users.details.UserDetailsFragment;
 import java.util.List;
 
 public class UsersListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,
-        UsersContract, ClickListener  {
+        UsersContract, ClickListener, TextChangedHelper.TextChangedCallback {
 
     private UsersPresenter presenter = new UsersPresenter(this);
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private UsersAdapter adapter;
+    private EditText etSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +45,11 @@ public class UsersListFragment extends BaseFragment implements SwipeRefreshLayou
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.CYAN);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        etSearch = view.findViewById(R.id.etSearch);
+
+        TextChangedHelper textChangedHelper = new TextChangedHelper(this);
+        textChangedHelper.attachEditText(etSearch);
+//        new TextChangedHelper(this).attachEditText(etSearch);
 
         presenter.getUsers();
 
@@ -62,6 +70,8 @@ public class UsersListFragment extends BaseFragment implements SwipeRefreshLayou
     public void getUsers(List<User> list) {
         adapter = new UsersAdapter(list, this);
         recyclerView.setAdapter(adapter);
+        etSearch.setText("");
+        etSearch.clearFocus();
     }
 
     @Override
@@ -79,5 +89,10 @@ public class UsersListFragment extends BaseFragment implements SwipeRefreshLayou
     public void onRefresh() {
         adapter.clear();
         presenter.getUsers();
+    }
+
+    @Override
+    public void onTextChanged(String s) {
+        adapter.filter(s);
     }
 }
