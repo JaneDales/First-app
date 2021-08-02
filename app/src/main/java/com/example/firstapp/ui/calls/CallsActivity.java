@@ -65,6 +65,12 @@ public class CallsActivity extends AppCompatActivity {
         employee.setPhone("+94221035");
         employees.add(employee);
 
+        employee = new Employee();
+        employee.setName("David");
+        employee.setAddress("New York");
+        employee.setPhone("+94221035");
+        employees.add(employee);
+
         // set adapter
         EmployeeAdapter adapter = new EmployeeAdapter(this, employees);
         recyclerView.setAdapter(adapter);
