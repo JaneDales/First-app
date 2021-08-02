@@ -7,7 +7,10 @@ import android.os.Bundle;
 
 import com.example.firstapp.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CallsActivity extends AppCompatActivity {
 
@@ -18,8 +21,25 @@ public class CallsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calls);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        initUI();
+        dateFormatTest();
+    }
 
+    private void dateFormatTest() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM, yyyy, hh:mm a");
+        Date date = Calendar.getInstance().getTime();
+        String strDateTime = sdf.format(date);
+        System.out.println("date === " + strDateTime);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -3);
+        calendar.add(Calendar.HOUR_OF_DAY, 5);
+        Date date1 = calendar.getTime();
+        System.out.println("date 1 = " + sdf.format(date1));
+    }
+
+    private void initUI() {
+        recyclerView = findViewById(R.id.recyclerView);
 
         ArrayList<Employee> employees = new ArrayList<>();
 
