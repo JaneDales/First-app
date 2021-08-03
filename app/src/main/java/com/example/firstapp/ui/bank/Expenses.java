@@ -1,6 +1,8 @@
 package com.example.firstapp.ui.bank;
 
-public class Expenses implements IExpenseType {
+import java.io.Serializable;
+
+public class Expenses implements IExpenseType, Serializable {
 
     private String title, subTitle, icon;
     private double price;

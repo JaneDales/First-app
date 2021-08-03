@@ -20,15 +20,22 @@ import java.util.ArrayList;
 
 public class ExpensesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    interface ClickListenerExpenses{
+        void onClick(Expenses expenses);
+    }
+
     private static int TYPE_EXPENSES = 1;
     private static int TYPE_DATE = 2;
 
     private Context context;
     private ArrayList<IExpenseType> expenses;
+    private ClickListenerExpenses clickListenerExpenses;
 
-    public ExpensesAdapter(Context context, ArrayList<IExpenseType> expenses) {
+    public ExpensesAdapter(Context context, ArrayList<IExpenseType> expenses,
+                           ClickListenerExpenses clickListenerExpenses) {
         this.context = context;
         this.expenses = expenses;
+        this.clickListenerExpenses = clickListenerExpenses;
     }
 
     @NonNull
@@ -63,6 +70,12 @@ public class ExpensesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (getItemViewType(position) == TYPE_EXPENSES) {
             ((ExpensesViewHolder) viewHolder).setExpensesDetails((Expenses) expenses.get(position));
+            ((ExpensesViewHolder) viewHolder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListenerExpenses.onClick((Expenses) expenses.get(position));
+                }
+            });
         } else {
             ((DateViewHolder) viewHolder).setDateDetails((Date) expenses.get(position));
         }

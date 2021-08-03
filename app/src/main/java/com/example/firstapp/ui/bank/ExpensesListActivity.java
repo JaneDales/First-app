@@ -1,15 +1,17 @@
 package com.example.firstapp.ui.bank;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
 import com.example.firstapp.R;
+import com.example.firstapp.ui.bank.details.ExpensesDetailsFragment;
 
 import java.util.ArrayList;
 
-public class ExpensesListActivity extends AppCompatActivity {
+public class ExpensesListActivity extends AppCompatActivity implements ExpensesAdapter.ClickListenerExpenses {
 
     private ExpensesAdapter expensesAdapter;
     private RecyclerView recyclerView;
@@ -25,7 +27,7 @@ public class ExpensesListActivity extends AppCompatActivity {
         ArrayList<IExpenseType> expenses = new ArrayList<>();
 
         Date expenses1 = new Date("29 июля");
-        Expenses expenses2 = new Expenses("Cильпо","Продукты и супермаркеты", "https://silpo.ua/images/silpo_fb_share.png",-650.50);
+        Expenses expenses2 = new Expenses("Cильпо","Продукты и супермаркеты", "https://silpo.ua/images/silpo_fb_share.png",-5.50);
         Expenses expenses3 = new Expenses("ATБ","Продукты и супермаркеты", "https://kremenchuk.tv/wp-content/uploads/2020/05/946cd9e118480dd738e062c4e6922b18_300_300_a.jpg",-560.50);
         Expenses expenses4 = new Expenses("Portmone","Коммуналка и интернет", "https://www.portmone.com.ua/public/i/portmone-logo-og.png",-250.0);
         Expenses expenses5 = new Expenses("Portmone","Коммуналка и интернет", "https://www.portmone.com.ua/public/i/portmone-logo-og.png",-200.0);
@@ -56,7 +58,16 @@ public class ExpensesListActivity extends AppCompatActivity {
         expenses.add(expenses14);
 
 
-        expensesAdapter = new ExpensesAdapter(this, expenses);
+        expensesAdapter = new ExpensesAdapter(this, expenses, this);
         recyclerView.setAdapter(expensesAdapter);
+    }
+
+    @Override
+    public void onClick(Expenses expenses) {
+        ExpensesDetailsFragment fragment = ExpensesDetailsFragment.newInstance(expenses);
+        FragmentTransaction frt = getSupportFragmentManager().beginTransaction();
+        frt.replace(R.id.containerId, fragment);
+        frt.addToBackStack(null);
+        frt.commit();
     }
 }
